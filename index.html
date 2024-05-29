@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seconds Counter</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #333;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .counter-digit {
+            font-size: 2rem;
+            margin: 0 5px;
+        }
+        .clock-icon {
+            margin-right: 10px;
+        }
+        .far.fa-clock {
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- React and ReactDOM scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
+    <!-- Babel script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <script type="text/babel">
+        function SecondsCounter({ seconds }) {
+            const digits = String(seconds).padStart(5, '0').split('');
+
+            return (
+                <div className="counter">
+                    <div className="clock-icon">
+                        <i className="far fa-clock"></i>
+                    </div>
+                    {digits.map((digit, index) => (
+                        <div key={index} className="counter-digit">{digit}</div>
+                    ))}
+                </div>
+            );
+        }
+
+        const rootElement = document.getElementById('root');
+        let startTime = Math.floor(Date.now() / 1000);
+
+        function tick() {
+            const secondsSinceStart = Math.floor(Date.now() / 1000) - startTime;
+            ReactDOM.render(<SecondsCounter seconds={secondsSinceStart} />, rootElement);
+        }
+
+        setInterval(tick, 1000);
+    </script>
+</body>
+</html>
